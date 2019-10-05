@@ -1,0 +1,34 @@
+/* 
+    Equipe: 
+        Nome:Iasmim Martins Spínola Tinôco - Subturma: B (Líder) .
+        Nome Fernanda de Brito Anselmo. Subturma D - Subturma: D 
+        Etapas 1 e 2.
+*/
+
+xj=50;
+yj=250;
+xo=480
+yo=250
+function setup() {
+  createCanvas(600, 400);
+}
+
+function draw() {
+  background(150,40,200);
+  fill(40,90,20)
+  
+ ellipse(xj, yj, 80, 50);// Desenho de uma elipse .
+  square(xo,yo,100 );//Desenho de um quadrado.
+  if(keyIsDown(UP_ARROW)){
+     yj= yj-5;
+  }
+  if (keyIsDown(DOWN_ARROW)){
+     yj= yj+5
+  }
+  if (keyIsDown(LEFT_ARROW)){
+    xj=xj-5
+}
+ if (keyIsDown(RIGHT_ARROW)){
+    xj=xj+5
+}
+}
