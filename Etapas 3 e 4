@@ -1,0 +1,58 @@
+xj=50;
+yj=250;
+xo=480
+yo=250
+ro=50
+xb=0
+yb=0
+disparo=false;
+function setup() {
+  createCanvas(600, 400);
+}
+
+function draw() {
+  background(150,40,200);
+  fill(40,90,20)
+  
+ ellipse(xj, yj, 80, 50);// Desenho de uma elipse .
+  if(keyIsDown(ENTER) && disparo==false){
+    xb=xj;
+    yb=yj;
+    disparo=true
+  }
+  if(disparo==true){
+    ellipse(xb, yb, 15, 30)
+    xb=xb + 10
+    if(xb>600){
+      disparo=false
+    }
+  }
+  
+  rectMode(CENTER)
+  square(xo,yo,100 );//Desenho de um quadrado.
+  teclado ();
+  moveO ();
+  
+}
+function teclado () { // função para o teclado.
+
+if(keyIsDown(UP_ARROW)){
+     yj= yj-5;
+  }
+  if (keyIsDown(DOWN_ARROW)){
+     yj= yj+5
+  }
+  if (keyIsDown(LEFT_ARROW)){
+    xj=xj-5
+}
+ if (keyIsDown(RIGHT_ARROW)){
+    xj=xj+5
+}
+}
+function moveO () {
+  xo=xo - 10
+  if(xo<-ro){
+    xo=width + ro
+  }
+    
+}
