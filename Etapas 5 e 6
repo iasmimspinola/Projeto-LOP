@@ -1,0 +1,83 @@
+//Equipe: 
+    //    Nome: Iasmim Martins Spínola Tinôco - Subturma: B (Líder).
+  //      Nome Fernanda de Brito Anselmo. Subturma D - Subturma: D
+//        Etapas 5 e 6.
+var xj=40;
+var yj=40;
+var xo=480;
+var yo=250;
+var ro=50;
+var xb=0;
+var yb=0;
+var disparo=false;
+var vida=3
+var nivel=1
+raio1=15
+raio2=30
+function setup() {
+  createCanvas(600, 400);
+}
+
+function draw() {
+  background(150,40,200);
+  fill(40,90,20)
+ circle(xj, yj, 2*raio1,2*raio1);// Desenho de uma elipse (JOGADOR).
+  
+  if(keyIsDown(ENTER) && disparo==false){ // Disparo com a tecla enter.
+    xb=xj;
+    yb=yj;
+    disparo=true
+  }
+  if(disparo==true){
+ 
+    ellipse(xb, yb, 10, 15)
+    xb=xb + 10
+    if(xb>600){
+      disparo=false
+    }
+  }
+  
+  rectMode(CENTER)
+  fill(255)
+  circle(xo,yo,2*raio2,2*raio2 );//Desenho de um circulo branco.(INIMIGO)
+ if(dist(xj, yj, xo, yo) < raio1+ raio2 ){
+  xj=40
+   yj=40
+
+  
+    }
+  
+  
+  
+  
+  stroke(0, 0, 0);
+  textSize(16);
+  fill(255)
+  text("Moedas: 0   Vidas: 5    Tempo: 1:00",0,18); //informação na tela
+  
+  teclado (); 
+  moveO ();
+ 
+}
+function teclado () { // função para o teclado.
+
+if(keyIsDown(UP_ARROW)){
+     yj= yj-5;
+  }
+  if (keyIsDown(DOWN_ARROW)){
+     yj= yj+5
+  }
+  if (keyIsDown(LEFT_ARROW)){
+    xj=xj-5
+}
+ if (keyIsDown(RIGHT_ARROW)){
+    xj=xj+5
+}
+}
+function moveO () { // função para movimentação.
+  xo=xo - 10
+  if(xo<-ro){
+    xo=width + ro
+  }
+    
+}
