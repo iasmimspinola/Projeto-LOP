@@ -1,0 +1,204 @@
+// Equipe: 
+    // Nome: Iasmim Martins Spínola Tinôco - Subturma: B (Líder).
+  // Nome Fernanda de Brito Anselmo. Subturma D - Subturma: D
+// Etapas 5 e 6.
+var cx=[];
+var cy=[];
+raioc=20
+var totalc=1
+var xj = 250;//Coordenada x do jogador.
+var yj = 400;//Coordenada y do jogador.
+var xd = 0;
+var yd = 0;
+var xVilao = [];
+var yVilao = [];
+var raiobala1 = 5;
+var raiobala2 = 8;
+var raioJogador = 40;
+var raioVilao = 60;
+var disparo = false;
+var vida = 10;
+var pontos = 0;
+var Nivel = 1;
+var total = 3;
+var barreiradepontos=10;
+var xPremio;
+var yPremio=0;
+var iJog;
+var coracao;
+var Vilao;
+var fundo;
+var tela=1;
+var receberVidas = false;
+var velocidadeV=3
+var velocidadeX=1
+function preload(){
+  iJog = loadImage("Nave (2).png");
+  coracao=loadImage("coraçao.png");
+  Vilao=loadImage("Vilão (1)-1.png");
+  coracao=loadImage("coração.png");
+  fundo=loadImage("fundo1.png");
+  tecla1=loadImage("teclas 1-1.png");
+}
+function setup() {
+  createCanvas(500, 500);
+  stroke(0, 0, 0);
+  fill(90,10,40);
+  for(var i = 0;i<total;i++){
+  xVilao[i]=500
+    yVilao[i]=350
+  }
+   for(var k = 0;i<totalc;i++){
+  cx[k]=100
+    xy[k]=300
+  }
+  xPremio = random(0, 500);
+}
+
+function draw() {
+  
+  if(tela==1){
+    
+    imageMode(CENTER)
+  background(0)
+   image(fundo, width/2, height/2, width, height)
+    stroke(0,0,0)
+    fill(0,300,0)
+   textSize(15);
+    image(tecla1,400,400,100,100)
+    text("Mova com:" ,400,380 )
+    if(keyIsDown(ENTER)){
+      tela=2;
+    }
+  }
+  if(tela==2){
+imageMode(CENTER)
+  background(0)
+   image(fundo, width/2, height/2, width, height)
+  teclado();
+  //ellipse(xj, yj, raioJogador, raioJogador);//Desenho do Jogador.
+  image(iJog, xj, yj, raioJogador, raioJogador);
+  imageMode(CENTER);
+  for (i=0; i<total; i++) {        
+ //square(xVilao[i], yVilao[i], raioVilao)// Desenho do obstáculo(inimigo).
+  image(Vilao,xVilao[i], yVilao[i], raioVilao,60);
+    yVilao[i]=yVilao[i] + velocidadeV
+    xVilao[i]=xVilao[i] + random(-velocidadeX,velocidadeX)
+  if(yVilao[i]>500){
+    yVilao[i]=random(0)
+    xVilao[i]=random(0,500)
+  }}
+
+  //Disparo.
+  if (keyIsDown(CONTROL) && disparo == false){
+    xd = xj;
+    yd = yj;
+    disparo = true;
+  }
+  
+  if (disparo == true){
+    ellipse(xd,yd,raiobala1,raiobala2);
+      yd = yd - 10;
+    if(yd < 0){ 
+      disparo = false;
+    }
+  }
+  for (i=0; i<total; i++) {  
+  if (dist(xj,yj,xVilao[i],yVilao[i]) <raioVilao) {
+       xj=250;
+       yj=400
+       vida=vida-1;      
+  xVilao[i]= random(0, 0);
+  yVilao[i] = random(0, 0);
+  }
+ }
+  for(i=0;i<total;i++){
+   if (dist(xd,yd,xVilao[i],yVilao[i]) <raioVilao ) {
+       pontos= pontos+2;
+     if(pontos>barreiradepontos){
+       Nivel++
+       velocidadeV +=0.5;
+       velocidadeX +=0.5;
+       
+       barreiradepontos=barreiradepontos+30;
+       receberVidas = true;
+       console.log('deveriaaparerumavida');
+     }
+     xVilao[i]=random(0, 400);
+   yVilao[i]=random(-100, 40);
+     }
+  }
+  
+  
+    if(vida<=0){
+       tela=3
+       }
+    
+    if(receberVidas==true){
+      image(coracao,xPremio, yPremio, 50, 50);
+      yPremio = yPremio+5;
+      if((dist(xj, yj, xPremio, yPremio)<=raioJogador)){
+        yPremio = 0;
+        xPremio = random(25, 475);
+        vida=vida +1 
+        receberVidas=false;
+       }
+      if(yPremio >=500){
+       receberVidas=false;
+        yPremio=0;
+      }
+    }
+    textSize(20);
+  stroke(100,100,0)
+  fill(255);
+  text("Nível: "+Nivel, 180, 20);
+  text("Vidas: "+vida, 10, 20);
+  text("Pontos: "+pontos, 350, 20);
+if(vida==0){
+tela=3;
+}
+  }
+
+  if(tela==3){
+    background(49,90,200)
+    text("Você morreu com "+pontos+" : pontos", 50, 250);
+    text("Nível: "+Nivel ,350,250);
+    pontos=0;
+    vida=20;
+    Nivel=1;
+    if(keyIsDown(ENTER)){
+      tela=1
+      console.log("deveria ter ido pra tela 1!");
+    }
+  }
+}
+
+
+function teclado() {
+  
+  if (keyIsDown(LEFT_ARROW)) {
+    xj -= 8;
+    if(xj < 0){
+      x = -random(170)
+      console.log(x)
+  }}
+
+  if (keyIsDown(RIGHT_ARROW)) {
+    xj += 8;
+    if(xj > 500){
+      xj = +random(170)
+     
+  }}
+
+  if (keyIsDown(UP_ARROW)) {
+    yj -= 8;
+    if(yj < 0){
+      yj= -random(170)
+  }
+  }
+  if (keyIsDown(DOWN_ARROW)) {
+    yj += 8;
+    if(yj > 500){
+      yj = +random(170)}
+  }
+}
